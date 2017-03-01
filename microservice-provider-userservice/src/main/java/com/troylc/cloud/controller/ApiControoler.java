@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
+ * 用户服务API转向
  * Created by troylc on 2017/3/1.
  */
 @Controller
