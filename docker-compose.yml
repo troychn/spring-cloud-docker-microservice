@@ -1,0 +1,63 @@
+version: "3"
+services:
+  eurekaService1:      # 默认情况下，其他服务可以使用服务名称连接到该服务。因此，对于peer2的节点，它需要连接http://peer1:8761/eureka/，因此需要配置该服务的名称是peer1。
+    image: tcr:5000/myhub/microservice-eureka-service:0.0.1
+    deploy:
+      replicas: 1   #定义 replicated 模式的服务的复本数量
+      update_config:
+        parallelism: 1    #每次更新复本数量
+        delay: 2s       #每次更新间隔
+      restart_policy:
+        condition: on-failure     #定义服务的重启条件
+    networks:
+      - eureka-net
+    ports:
+      - "9511:9511"
+    environment:
+      - spring.profiles.active=eurekaService1
+  eurekaService2:
+    image: tcr:5000/myhub/microservice-eureka-service:0.0.1
+    deploy:
+      replicas: 1   #定义 replicated 模式的服务的复本数量
+      update_config:
+        parallelism: 1    #每次更新复本数量
+        delay: 2s       #每次更新间隔
+      restart_policy:
+        condition: on-failure     #定义服务的重启条件
+    networks:
+      - eureka-net
+    ports:
+      - "9512:9512"
+    environment:
+      - spring.profiles.active=eurekaService2
+  eurekaService3:
+      image: tcr:5000/myhub/microservice-eureka-service:0.0.1
+      deploy:
+        replicas: 1   #定义 replicated 模式的服务的复本数量
+        update_config:
+          parallelism: 1    #每次更新复本数量
+          delay: 2s       #每次更新间隔
+        restart_policy:
+          condition: on-failure     #定义服务的重启条件
+      networks:
+        - eureka-net
+      ports:
+        - "9513:9513"
+      environment:
+        - spring.profiles.active=eurekaService3
+  userService:
+        image: tcr:5000/myhub/microservice-provider-userservice:0.0.2
+        deploy:
+          replicas: 2   #定义 replicated 模式的服务的复本数量
+          update_config:
+            parallelism: 1    #每次更新复本数量
+            delay: 2s       #每次更新间隔
+          restart_policy:
+            condition: on-failure     #定义服务的重启条件
+        networks:
+          - eureka-net
+        ports:
+          - "9514:9514"
+networks:
+  eureka-net:
+    driver: overlay

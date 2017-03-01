@@ -1,0 +1,19 @@
+
+server:
+  port: 9511                    # 指定该Eureka实例的端口
+eureka:
+  instance:
+    hostname: eurekaService               # 指定该Eureka实例的主机名
+#    作为实例还涉及到与注册中心的周期性心跳，默认持续时间为30秒（通过serviceUrl）。在实例、服务器、客户端都在本地缓存中具有相同的元数据之前，
+#    服务不可用于客户端发现（所以可能需要3次心跳）。你可以使用eureka.instance.leaseRenewalIntervalInSeconds 配置，这将加快客户端连接到其他服务的过程。
+#    在生产中，最好坚持使用默认值，因为在服务器内部有一些计算，他们对续约做出假设。
+    lease-renewal-interval-in-seconds: 5
+#    服务的Instance ID的默认值是${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${server.port}} ，
+#    也就是机器主机名:应用名称:应用端口 。因此在Eureka Server首页中看到的服务的信息类似如下：itmuch:microservice-provider-user:8000
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port} # 将Instance ID设置成IP:端口的形式
+  client:
+    registerWithEureka: false  #表示是否将自己注册到Eureka Server，默认为true。由于当前这个应用就是Eureka Server，故而设为false
+    fetchRegistry: false  #表示是否从Eureka Server获取注册信息，默认为true。因为这是一个单点的Eureka Server，不需要同步其他的Eureka Server节点的数据，故而设为false
+    serviceUrl:   #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

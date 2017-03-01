@@ -1,0 +1,25 @@
+
+# 配置两个实例的eureka高可用配置，如果是在swarm集群中服务，请把swarm中我service名称部署为两个，分别为：eurekaService1,eurekaService2
+---
+spring:
+  profiles: eurekaService1
+server:
+  port: 9511                    # 指定该Eureka实例的端口
+eureka:
+  instance:
+    hostname: eurekaService1         # 指定该Eureka实例的主机名
+  client:
+    serviceUrl:    #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+      defaultZone: http://eurekaService2:9512/eureka/
+
+---
+spring:
+  profiles: eurekaService2
+server:
+  port: 9512                    # 指定该Eureka实例的端口
+eureka:
+  instance:
+    hostname: eurekaService2         # 指定该Eureka实例的主机名
+  client:
+    serviceUrl:    #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+      defaultZone: http://eurekaService1:9512/eureka/

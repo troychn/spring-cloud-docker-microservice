@@ -1,0 +1,63 @@
+spring:
+  application:
+    name: microservice-eureka-services
+#  profiles:
+#    active: eurekaService1
+security:
+  basic:
+    enabled: true     # 开启基于HTTP basic的认证
+  user:
+    name: eadmin      # 配置登录的账号是user
+    password: eadmin123   # 配置登录的密码是eadmin123
+
+
+# 配置三个实例的eureka高可用配置，如果是在swarm集群中服务，请把swarm中我service名称部署为三个，分别为：eurekaService1,eurekaService2,eurekaService3
+---
+spring:
+  profiles: eurekaService1
+server:
+  port: 9511                    # 指定该Eureka实例的端口
+eureka:
+  instance:
+    hostname: eurekaService1         # 指定该Eureka实例的主机名
+    #    作为实例还涉及到与注册中心的周期性心跳，默认持续时间为30秒（通过serviceUrl）。在实例、服务器、客户端都在本地缓存中具有相同的元数据之前，
+    #    服务不可用于客户端发现（所以可能需要3次心跳）。你可以使用eureka.instance.leaseRenewalIntervalInSeconds 配置，这将加快客户端连接到其他服务的过程。
+    #    在生产中，最好坚持使用默认值，因为在服务器内部有一些计算，他们对续约做出假设。
+    lease-renewal-interval-in-seconds: 5
+    #    服务的Instance ID的默认值是${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${server.port}} ，
+    #    也就是机器主机名:应用名称:应用端口 。因此在Eureka Server首页中看到的服务的信息类似如下：itmuch:microservice-provider-user:8000
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port} # 将Instance ID设置成IP:端口的形式
+  client:
+    serviceUrl:    #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+      defaultZone: http:/eadmin:eadmin123@eurekaService2:9512/eureka/,http://eadmin:eadmin123@eurekaService3:9513/eureka/
+
+---
+spring:
+  profiles: eurekaService2
+server:
+  port: 9512                    # 指定该Eureka实例的端口
+eureka:
+  instance:
+    hostname: eurekaService2         # 指定该Eureka实例的主机名
+    lease-renewal-interval-in-seconds: 5
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+  client:
+    serviceUrl:    #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+      defaultZone: http://eadmin:eadmin123@eurekaService1:9511/eureka/,http://eadmin:eadmin123@eurekaService3:9513/eureka/
+
+---
+spring:
+  profiles: eurekaService3
+server:
+  port: 9513                    # 指定该Eureka实例的端口
+eureka:
+  instance:
+    hostname: eurekaService3         # 指定该Eureka实例的主机名
+    lease-renewal-interval-in-seconds: 5
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+  client:
+    serviceUrl:    #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+      defaultZone: http://eadmin:eadmin123@eurekaService2:9512/eureka/,http://eadmin:eadmin123@eurekaService1:9511/eureka/

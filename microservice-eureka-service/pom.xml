@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>com.troylc.cloud</groupId>
+        <artifactId>spring-cloud-docker-microservice</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.troylc.cloud</groupId>
+    <artifactId>microservice-eureka-service</artifactId>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+
+    <name>microservice-eureka-service</name>
+    <description>project for Spring cloud</description>
+
+    <properties>
+        <!--程序入口-->
+        <start-class>com.troylc.cloud.EurekaServiceApplication</start-class>
+    </properties>
+
+
+	<dependencies>
+        <!--eurekaService必须引用的包-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka-server</artifactId>
+		</dependency>
+        <!--配置需要认证的eurekaservice所需要引用的包-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>build-image</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+              <!--      <serverId>docker-hub-aliyun</serverId>
+                    <registryUrl>registry.cn-hangzhou.aliyuncs.com/troylc/hub</registryUrl>-->
+                    <!--<dockerHost>http://172.19.6.225:8372</dockerHost>-->
+                    <!--安装了docker的主机，并且打开了api remote接口设置-->
+                    <dockerHost>http://10.211.55.4:8372</dockerHost>
+                    <pushImage>true</pushImage><!--设置上传镜像到私有仓库，需要docker设置指定私有仓库地址-->
+                    <!--镜像名称-->
+                    <imageName>${docker.repostory}/${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
+                    <!--镜像的基础版本-->
+                    <baseImage>java:openjdk-8-jdk-alpine</baseImage>
+                    <!--镜像启动参数-->
+                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+                    <!--<imageTags>
+                        <imageTag>${project.version}</imageTag>
+                    </imageTags>-->
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
