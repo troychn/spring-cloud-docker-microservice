@@ -84,6 +84,7 @@ public class UserController {
         UserBean userBean = null;
         try {
             userBean = userServiceImpl.getUserById(id);
+            log.info(userBean.toString());
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResultInfo<UserBean>(ReturnInfoEnum.SYSTEM_ERROR.getState(), ReturnInfoEnum.SYSTEM_ERROR.getStateInfo());

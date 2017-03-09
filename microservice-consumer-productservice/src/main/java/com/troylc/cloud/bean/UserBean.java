@@ -1,38 +1,39 @@
 package com.troylc.cloud.bean;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by troylc on 2017/2/27.
+ * Created by troylc on 2017/3/5.
  */
-@Entity
-@Table(name="user")
 public class UserBean implements Serializable{
     /**
      * 用户主键ID，自动增长
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     /**
      * 用户姓名
      */
-    @Column
     private String username;
 
     /**
      * 用户名称
      */
-    @Column
     private Integer age;
 
     /**
      * 用户地址
      */
-    @Column
     private String address;
+
+    public UserBean() {
+        super();
+    }
+
+    public UserBean(String username, String address) {
+        this.username = username;
+        this.address = address;
+    }
 
     public Long getId() {
         return this.id;
@@ -64,15 +65,5 @@ public class UserBean implements Serializable{
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return "UserBean{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", age=" + age +
-                ", address='" + address + '\'' +
-                '}';
     }
 }
