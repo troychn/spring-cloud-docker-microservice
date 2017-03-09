@@ -22,6 +22,7 @@
     <modules>
         <module>microservice-eureka-service</module>
         <module>microservice-provider-userservice</module>
+        <module>microservice-consumer-productservice</module>
     </modules>
 
 	<properties>

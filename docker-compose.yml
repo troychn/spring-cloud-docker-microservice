@@ -58,6 +58,19 @@ services:
           - eureka-net
         ports:
           - "9514:9514"
+  productService:
+          image: tcr:5000/myhub/microservice-consumer-productservice:0.0.2
+          deploy:
+            replicas: 1   #定义 replicated 模式的服务的复本数量
+            update_config:
+              parallelism: 1    #每次更新复本数量
+              delay: 2s       #每次更新间隔
+            restart_policy:
+              condition: on-failure     #定义服务的重启条件
+          networks:
+            - eureka-net
+          ports:
+            - "9515:9515"
 networks:
   eureka-net:
     driver: overlay
