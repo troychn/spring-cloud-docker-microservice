@@ -17,6 +17,8 @@
 子项目为服务注册中心，考虑到高可用，通过docker-compose编排部署3个实例在docker swarm容器集群环境
 - microservice-provider-userService(用户服务注册)  
 子项目为用户服务，加入了spring boot中的监控管理的actuator，API接口文档模块swagger2,eurekaDiscoveryClient用户将服务注册到eureka注册中心  
+- microservice-consumer-productservice（商品服务消费用户服务）
+子项目为商品服务，加入了FeignClient、Hystrix断路器、Hystrix仪表盘监控服务运行情况，商品服务通过FeignClient调用用户服务
 
 
 
