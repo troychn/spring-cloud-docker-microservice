@@ -28,7 +28,7 @@ public class ResultInfo<T> implements Serializable {
         this.data = data;
     }
 
-    public String isSuccess() {
+    public String getSuccess() {
         return success;
     }
 
@@ -43,7 +43,6 @@ public class ResultInfo<T> implements Serializable {
     public void setData(T data) {
         this.data = data;
     }
-
 
     public String getMesagess() {
         return mesagess;

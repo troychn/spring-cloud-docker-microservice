@@ -95,7 +95,7 @@ public class ProductControoler {
         UserBean userBean = null;
         try {
             ResultInfo<UserBean> resultInfo = userServiceFeignRest.getUser(id);
-            userBean =   resultInfo.getData();
+            userBean =  resultInfo.getData();
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());

@@ -10,7 +10,7 @@ public enum ReturnInfoEnum {
     NULL("0", "没有你请求的数据"),
     PARAMETER_ERROR("-1", "请求数据失败，参数错误"),
     SYSTEM_ERROR("-2", "请求数据失败，系统异常"),
-    NOT_AUTHENTICATE("-3", "请示数据失败，未认证");
+    NOT_AUTHENTICATE("-3", "请求数据失败，未认证");
 
 
     private String state;
