@@ -19,6 +19,8 @@
 子项目为用户服务，加入了spring boot中的监控管理的actuator，API接口文档模块swagger2,eurekaDiscoveryClient用户将服务注册到eureka注册中心  
 - microservice-consumer-productservice（商品服务消费用户服务）
 子项目为商品服务，加入了FeignClient、Hystrix断路器、Hystrix仪表盘监控服务运行情况，商品服务通过FeignClient调用用户服务
+- microservice-api-gateway (spring cloud 服务网关) 子项目为apiGateway，通过spring cloud 的zuul实现服务对外路由与
+负载均衡，通过zuulfilter,实现自定义的filter来剥离主要微服务的业务之上构建安全访问。通过fallback实现对路由服务回调返回操作。
 
 
 
