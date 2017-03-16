@@ -1,5 +1,5 @@
 server:
-  port: 9516
+  port: 9514
 spring:
   application:
     name: microservice-provider-userservice

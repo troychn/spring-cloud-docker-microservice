@@ -6,6 +6,7 @@ import com.troylc.cloud.utils.ReturnInfoEnum;
 import com.troylc.cloud.vbean.ResultInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,8 +60,8 @@ public class AccessControlFilter extends ZuulFilter {
             //未认证
             ResultInfo resultInfo = new ResultInfo<>(ReturnInfoEnum.NOT_AUTHENTICATE.getState(),ReturnInfoEnum.NOT_AUTHENTICATE.getStateInfo());
             ctx.getResponse().setContentType("text/html;charset=UTF-8");
+            ctx.getResponse().setContentType(String.valueOf(MediaType.APPLICATION_JSON));
             ctx.setResponseBody(resultInfo.toString());
-
             return null;
         }
         log.info("access token ok");
