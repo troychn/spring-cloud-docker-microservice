@@ -5,6 +5,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.troylc.cloud.bean.ProductBean;
 import com.troylc.cloud.bean.UserBean;
+import com.troylc.cloud.service.CommentServiceFeign;
 import com.troylc.cloud.service.IProductService;
 import com.troylc.cloud.service.UserServiceFeign;
 import com.troylc.cloud.service.impl.UserServiceFeignRest;
@@ -31,6 +32,9 @@ public class ProductControoler {
 
     @Autowired
     private UserServiceFeign userServiceFeign;
+
+    @Autowired
+    private CommentServiceFeign commentServiceFeign;
 
     @Autowired
     private UserServiceFeignRest userServiceFeignRest;
@@ -102,6 +106,24 @@ public class ProductControoler {
             return new ResultInfo<UserBean>(ReturnInfoEnum.SYSTEM_ERROR.getState(), ReturnInfoEnum.SYSTEM_ERROR.getStateInfo());
         }
         return new ResultInfo<>(ReturnInfoEnum.SUCCESS.getState(), ReturnInfoEnum.SUCCESS.getStateInfo(), userBean);
+    }
+
+
+    @ApiOperation(value = "获取商品评价，sidecar-nodejs方式", notes = "获取商品评价")
+    @HystrixCommand(commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000"),
+            @HystrixProperty(name = "execution.timeout.enabled", value = "false")})
+    @RequestMapping(value = "/getComment", method = RequestMethod.GET)
+    public ResultInfo getComment() {
+        ResultInfo<Object> resultInfo = null;
+        try {
+            resultInfo = commentServiceFeign.getComment();
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return new ResultInfo<UserBean>(ReturnInfoEnum.SYSTEM_ERROR.getState(), ReturnInfoEnum.SYSTEM_ERROR.getStateInfo());
+        }
+        return new ResultInfo<>(ReturnInfoEnum.SUCCESS.getState(), ReturnInfoEnum.SUCCESS.getStateInfo(), resultInfo.getData());
     }
 
 }

@@ -24,6 +24,7 @@
         <module>microservice-provider-userservice</module>
         <module>microservice-consumer-productservice</module>
         <module>microservice-api-gateway</module>
+        <module>microservice-sidecar-comment</module>
     </modules>
 
 	<properties>

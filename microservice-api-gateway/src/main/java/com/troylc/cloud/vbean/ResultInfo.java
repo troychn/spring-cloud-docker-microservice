@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class ResultInfo<T> implements Serializable {
 
-    private String code;
+    private String status;
 
     private T data;
 
@@ -17,23 +17,23 @@ public class ResultInfo<T> implements Serializable {
     public ResultInfo() {
     }
 
-    public ResultInfo(String code, String mesagess) {
-        this.code = code;
+    public ResultInfo(String status, String mesagess) {
+        this.status = status;
         this.mesagess = mesagess;
     }
 
-    public ResultInfo(String code, String mesagess, T data) {
-        this.code = code;
+    public ResultInfo(String status, String mesagess, T data) {
+        this.status = status;
         this.mesagess = mesagess;
         this.data = data;
     }
 
-    public String getCode() {
-        return code;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public T getData() {
@@ -55,7 +55,7 @@ public class ResultInfo<T> implements Serializable {
     @Override
     public String toString() {
         return "ResultInfo{" +
-                "code=" + code +
+                "status=" + status +
                 ", data=" + data +
                 ", error='" + mesagess + '\'' +
                 '}';

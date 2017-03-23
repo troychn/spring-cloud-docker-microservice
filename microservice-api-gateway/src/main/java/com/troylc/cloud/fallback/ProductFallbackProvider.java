@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * 路由网关的商品短路器返回调用
+ * 商品微服务短路器返回调用
  * Created by troylc on 2017/3/14.
  */
 @Component

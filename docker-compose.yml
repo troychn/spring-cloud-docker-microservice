@@ -84,6 +84,32 @@ services:
       - eureka-net
     ports:
       - "9516:9516"
+  nodeComment:
+    image: tcr:5000/myhub/microservice-nodejs-comment:0.0.1
+    deploy:
+      replicas: 1   #定义 replicated 模式的服务的复本数量
+      update_config:
+        parallelism: 1    #每次更新复本数量
+        delay: 2s       #每次更新间隔
+      restart_policy:
+        condition: on-failure     #定义服务的重启条件
+    networks:
+      - eureka-net
+    ports:
+      - "3000:3000"
+  sidecarComment:
+    image: tcr:5000/myhub/microservice-sidecar-comment:0.0.1
+    deploy:
+      replicas: 1   #定义 replicated 模式的服务的复本数量
+      update_config:
+        parallelism: 1    #每次更新复本数量
+        delay: 2s       #每次更新间隔
+      restart_policy:
+        condition: on-failure     #定义服务的重启条件
+    networks:
+      - eureka-net
+    ports:
+      - "9517:9517"
 networks:
   eureka-net:
     driver: overlay
