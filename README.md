@@ -19,8 +19,10 @@
 子项目为用户服务，加入了spring boot中的监控管理的actuator，API接口文档模块swagger2,eurekaDiscoveryClient用户将服务注册到eureka注册中心  
 - microservice-consumer-productservice（商品服务消费用户服务）
 子项目为商品服务，加入了FeignClient、Hystrix断路器、Hystrix仪表盘监控服务运行情况，商品服务通过FeignClient调用用户服务
-- c (spring cloud 服务网关) 子项目为apiGateway，通过spring cloud 的zuul实现服务对外路由与
+- microservice-api-gateway (spring cloud 服务网关) 子项目为apiGateway，通过spring cloud 的zuul实现服务对外路由与
 负载均衡，通过zuulfilter,实现自定义的filter来剥离主要微服务的业务之上构建安全访问。通过fallback实现对路由服务回调返回操作。
+- microservice-nodejs-comment 子项目 用nodejs写的一个简单的商品评论系统，做为接入微服务注册中的异构平台
+- microservice-sidecar-comment 通过此应用把用nodejs构建的异构平台的服务接入了整个微服务体系中
 
 
 
