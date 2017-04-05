@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: microservice-provider-userservice
+  cloud:
+    config:
+      username: cadmin
+      password: cadmin123
+      label: master
+      discovery:
+        enabled: true
+        service-id: microservice-config-service
+      profile: dev
+      fail-fast: true
+    stream:   #配置通过spring cloud bus利用kafka消息机制实现自动刷新配置文件
+      kafka:
+        binder:
+          zk-nodes: zookeeper:2181
+          brokers: kafka:9092
+    bus:
+      trace:
+        enabled: true   #Spring Cloud Bus事件传播的细节
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eadmin:eadmin123@eurekaService1:9511/eureka/,http://eadmin:eadmin123@eurekaService2:9512/eureka/,http://eadmin:eadmin123@eurekaService3:9513/eureka/
+#服务状态UNKNOWN
+#如果把微服务的 eureka.client.healthcheck.enabled 属性配置在 bootstrap.yml 里面，可能会引起一些不良反应
+#比如，实际测试发现，Eureka 首页显示的服务状态，本应是 UP(1)，却变成大红色的粗体 UNKNOWN(1)
+#    healthcheck:
+#      enabled: true

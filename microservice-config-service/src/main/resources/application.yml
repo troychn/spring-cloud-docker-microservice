@@ -1,0 +1,42 @@
+server:
+  port: 9518
+#实现的基本的 HttpBasic 的认证
+security:
+  basic:
+    enabled: true     # 开启基于HTTP basic的认证
+  user:
+    name: cadmin      # 配置登录的账号是user
+    password: cadmin123   # 配置登录的密码是eadmin123
+    
+spring:
+  application:
+    name: microservice-config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://git.oschina.net/gittroylc/microservice-config-repo.git    # git 仓库地址
+#          search-paths:
+#            - microservice-provider-userservice*
+#            - microservice-consumer-productservice*
+          clone-on-start: true
+          search-paths: '{application}'
+    stream:   #配置通过spring cloud bus利用kafka消息机制实现自动刷新配置文件
+      kafka:
+        binder:
+          zk-nodes: zookeeper:2181
+          brokers: kafka:9092      
+eureka:
+  instance:
+    hostname: configService
+    prefer-ip-address: true
+    ip-address: ${eureka.instance.hostname} #只有当prefer-ip-address: true 时才生效
+    instance-id: ${eureka.instance.hostname}:${server.port}  # 将Instance ID设置成IP:端口的形式
+  client:
+    serviceUrl:
+     defaultZone: http://eadmin:eadmin123@eurekaService1:9511/eureka/,http://eadmin:eadmin123@eurekaService2:9512/eureka/,http://eadmin:eadmin123@eurekaService3:9513/eureka/
+
+
+
+
+

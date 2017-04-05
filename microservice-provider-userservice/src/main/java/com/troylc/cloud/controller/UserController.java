@@ -10,8 +10,10 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -22,6 +24,7 @@ import java.util.List;
  * Rest服务提供者，供其它服务调用
  * Created by troylc on 2017/2/28.
  */
+@RefreshScope
 @RestController
 public class UserController {
 
@@ -34,8 +37,28 @@ public class UserController {
     private IUserService userServiceImpl;
 
 
+    @Value("${from}")
+    private String fromInfostr;
     /**
      * 获取所有用户
+     * @return
+     */
+    @ApiOperation(value = "获取自动刷新后的配置文件中from中的值", notes = "获取自动刷新后的配置文件")
+    @GetMapping("/from")
+    public ResultInfo geFromInfo() {
+        String fromInfostr = null;
+        try {
+            fromInfostr = this.fromInfostr;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResultInfo<String>(ReturnInfoEnum.SYSTEM_ERROR.getState(), ReturnInfoEnum.SYSTEM_ERROR.getStateInfo());
+        }
+        return new ResultInfo<String>(ReturnInfoEnum.SUCCESS.getState(),ReturnInfoEnum.SUCCESS.getStateInfo(), fromInfostr);
+    }
+
+    /**
+     * 获取所有用户
+     *
      * @return
      */
     @ApiOperation(value = "获取用户列表", notes = "获取所有用户")
@@ -48,7 +71,7 @@ public class UserController {
             log.error(e.getMessage());
             return new ResultInfo<UserBean>(ReturnInfoEnum.SYSTEM_ERROR.getState(), ReturnInfoEnum.SYSTEM_ERROR.getStateInfo());
         }
-        return new ResultInfo<List<UserBean>>(ReturnInfoEnum.SUCCESS.getState(),ReturnInfoEnum.SUCCESS.getStateInfo(),userBeans);
+        return new ResultInfo<List<UserBean>>(ReturnInfoEnum.SUCCESS.getState(), ReturnInfoEnum.SUCCESS.getStateInfo(), userBeans);
     }
 
     /**
