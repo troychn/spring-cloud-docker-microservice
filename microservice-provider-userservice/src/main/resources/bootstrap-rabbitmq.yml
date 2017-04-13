@@ -11,11 +11,16 @@ spring:
         service-id: microservice-config-service
       profile: dev
       fail-fast: true
-    stream:   #配置通过spring cloud bus利用kafka消息机制实现自动刷新配置文件
-      kafka:
-        binder:
-          zk-nodes: zookeeper:2181
-          brokers: kafka:9092
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+#    stream:   #配置通过spring cloud bus利用kafka消息机制实现自动刷新配置文件
+#      kafka:
+#        binder:
+#          zk-nodes: zookeeper:2181
+#          brokers: kafka:9092
     bus:
       trace:
         enabled: true   #Spring Cloud Bus事件传播的细节

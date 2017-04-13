@@ -45,19 +45,6 @@ services:
       - "9513:9513"
     environment:
       - spring.profiles.active=eurekaService3
-  userService:
-    image: tcr:5000/myhub/microservice-provider-userservice:0.0.1
-    deploy:
-      replicas: 1   #定义 replicated 模式的服务的复本数量
-      update_config:
-        parallelism: 1    #每次更新复本数量
-        delay: 2s       #每次更新间隔
-      restart_policy:
-        condition: on-failure     #定义服务的重启条件
-    networks:
-      - eureka-net
-    ports:
-      - "9514:9514"
   productService:
     image: tcr:5000/myhub/microservice-consumer-productservice:0.0.1
     deploy:
@@ -71,6 +58,10 @@ services:
       - eureka-net
     ports:
       - "9515:9515"
+    depends_on:
+      - eurekaService1
+      - eurekaService2
+      - eurekaService3
   apiGateway:
     image: tcr:5000/myhub/microservice-api-gateway:0.0.1
     deploy:
@@ -84,6 +75,12 @@ services:
       - eureka-net
     ports:
       - "9516:9516"
+    depends_on:
+      - productService
+      - userService
+      - eurekaService1
+      - eurekaService2
+      - eurekaService3
   nodeComment:
     image: tcr:5000/myhub/microservice-nodejs-comment:0.0.1
     deploy:
@@ -110,21 +107,13 @@ services:
       - eureka-net
     ports:
       - "9517:9517"
-  configService:
-    image: tcr:5000/myhub/microservice-config-service:0.0.1
-    deploy:
-      replicas: 1   #定义 replicated 模式的服务的复本数量
-      update_config:
-        parallelism: 1    #每次更新复本数量
-        delay: 2s       #每次更新间隔
-      restart_policy:
-        condition: on-failure     #定义服务的重启条件
-    networks:
-      - eureka-net
-    ports:
-      - "9518:9518"
+    depends_on:
+      - nodeComment
+      - eurekaService1
+      - eurekaService2
+      - eurekaService3
   zookeeper:
-    image: tcr:5000/tschub/zookeeper:3.4.9
+    image: tcr:5000/myhub/zookeeper:3.4.9
     deploy:
       replicas: 1   #定义 replicated 模式的服务的复本数量
       update_config:
@@ -137,7 +126,7 @@ services:
     ports:
       - "2181:2181"
   kafka:
-    image: tcr:5000/tschub/kafka:0.10.1.0 
+    image: tcr:5000/myhub/kafka:0.10.1.1
     deploy:
       replicas: 1   #定义 replicated 模式的服务的复本数量
       update_config:
@@ -153,6 +142,60 @@ services:
       - 'KAFKA_ADVERTISED_HOST_NAME=kafka'
       - 'KAFKA_ADVERTISED_PORT=9092'
       - 'KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181'
+    depends_on:
+      - zookeeper
+  rabbitmq:
+    image: tcr:5000/myhub/rabbitmq:3.6.9-management-alpine
+    hostname: 'my-rabbit'
+    deploy:
+      replicas: 1   #定义 replicated 模式的服务的复本数量
+      update_config:
+        parallelism: 1    #每次更新复本数量
+        delay: 2s       #每次更新间隔
+      restart_policy:
+        condition: on-failure     #定义服务的重启条件
+    networks:
+      - eureka-net
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  configService:
+    image: tcr:5000/myhub/microservice-config-service:0.0.3
+    deploy:
+      replicas: 1   #定义 replicated 模式的服务的复本数量
+      update_config:
+        parallelism: 1    #每次更新复本数量
+        delay: 2s       #每次更新间隔
+      restart_policy:
+        condition: on-failure     #定义服务的重启条件
+    networks:
+      - eureka-net
+    ports:
+      - "9518:9518"
+    depends_on:
+      - kafka
+      - eurekaService1
+      - eurekaService2
+      - eurekaService3
+  userService:
+    image: tcr:5000/myhub/microservice-provider-userservice:0.0.3
+    deploy:
+      replicas: 1   #定义 replicated 模式的服务的复本数量
+      update_config:
+        parallelism: 1    #每次更新复本数量
+        delay: 2s       #每次更新间隔
+      restart_policy:
+        condition: on-failure     #定义服务的重启条件
+    networks:
+      - eureka-net
+    ports:
+      - "9514:9514"
+    depends_on:
+      - kafka
+      - configService
+      - eurekaService1
+      - eurekaService2
+      - eurekaService3
 networks:
   eureka-net:
     driver: overlay

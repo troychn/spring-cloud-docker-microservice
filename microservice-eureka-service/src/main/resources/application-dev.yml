@@ -1,6 +1,16 @@
-
+spring:
+  application:
+    name: microservice-eureka-services
 server:
   port: 9511                    # 指定该Eureka实例的端口
+
+security:
+  basic:
+    enabled: true     # 开启基于HTTP basic的认证
+  user:
+    name: eadmin      # 配置登录的账号是user
+    password: eadmin123   # 配置登录的密码是eadmin123
+
 eureka:
   instance:
     hostname: eurekaService               # 指定该Eureka实例的主机名
@@ -13,7 +23,7 @@ eureka:
     prefer-ip-address: true
     instance-id: ${spring.cloud.client.ipAddress}:${server.port} # 将Instance ID设置成IP:端口的形式
   client:
-    registerWithEureka: false  #表示是否将自己注册到Eureka Server，默认为true。由于当前这个应用就是Eureka Server，故而设为false
-    fetchRegistry: false  #表示是否从Eureka Server获取注册信息，默认为true。因为这是一个单点的Eureka Server，不需要同步其他的Eureka Server节点的数据，故而设为false
+    register-with-eureka: false  #表示是否将自己注册到Eureka Server，默认为true。由于当前这个应用就是Eureka Server，故而设为false
+    fetch-Registry: false  #表示是否从Eureka Server获取注册信息，默认为true。因为这是一个单点的Eureka Server，不需要同步其他的Eureka Server节点的数据，故而设为false
     serviceUrl:   #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://eadmin:eadmin123@${eureka.instance.hostname}:${server.port}/eureka/

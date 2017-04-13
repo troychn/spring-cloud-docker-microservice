@@ -2,7 +2,7 @@
 
 * 本Repo是Spring Cloud与Docker微服务实战笔记的配套代码
 * 包含X个DEMO
-* 覆盖的项目有Eureka
+* 覆盖的spring cloud的组件有有Eureka，Feign,zuul,bus,config,sidecar等
 
 
 
