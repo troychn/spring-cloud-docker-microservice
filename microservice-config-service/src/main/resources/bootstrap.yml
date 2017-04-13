@@ -32,8 +32,8 @@ spring:
 #            - microservice-consumer-productservice*
           clone-on-start: true
           search-paths: '{application}'
-          username: troylc@qq.com
-          password: password
+          username: username   #填写git仓库的用户名
+          password: password   #填写git仓库的密码
 #      discovery:
 #        enabled: true
 #      fail-fast: true
