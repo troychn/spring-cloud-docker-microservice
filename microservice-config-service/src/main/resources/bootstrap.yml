@@ -33,7 +33,7 @@ spring:
           clone-on-start: true
           search-paths: '{application}'
           username: troylc@qq.com
-          password: ibmx2201003
+          password: password
 #      discovery:
 #        enabled: true
 #      fail-fast: true
