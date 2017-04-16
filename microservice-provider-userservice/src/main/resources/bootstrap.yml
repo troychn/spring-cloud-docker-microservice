@@ -16,6 +16,8 @@ spring:
         binder:
           zk-nodes: zookeeper:2181
           brokers: kafka:9092
+          defaultBrokerPort: 9092
+          defaultZkPort: 2181
     bus:
       trace:
         enabled: true   #Spring Cloud Bus事件传播的细节

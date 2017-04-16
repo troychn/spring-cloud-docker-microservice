@@ -37,7 +37,7 @@ public class UserController {
     private IUserService userServiceImpl;
 
 
-    @Value("${from}")
+    @Value("${configfrom}")
     private String fromInfostr;
     /**
      * 获取所有用户
