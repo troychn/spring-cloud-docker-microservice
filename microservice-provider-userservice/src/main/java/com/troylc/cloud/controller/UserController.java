@@ -37,6 +37,14 @@ public class UserController {
     private IUserService userServiceImpl;
 
 
+    public String getConfigfrom() {
+        return configfrom;
+    }
+
+    public void setConfigfrom(String configfrom) {
+        this.configfrom = configfrom;
+    }
+
     @Value("${configfrom}")
     private String configfrom;
     /**
