@@ -38,7 +38,7 @@ public class UserController {
 
 
     @Value("${configfrom}")
-    private String fromInfostr;
+    private String configfrom;
     /**
      * 获取所有用户
      * @return
@@ -48,7 +48,7 @@ public class UserController {
     public ResultInfo geFromInfo() {
         String fromInfostr = null;
         try {
-            fromInfostr = this.fromInfostr;
+            fromInfostr = this.configfrom;
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResultInfo<String>(ReturnInfoEnum.SYSTEM_ERROR.getState(), ReturnInfoEnum.SYSTEM_ERROR.getStateInfo());

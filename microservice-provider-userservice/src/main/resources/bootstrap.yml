@@ -24,8 +24,8 @@ spring:
 eureka:
   client:
     serviceUrl:
-#      defaultZone: http://eadmin:eadmin123@eurekaService1:9511/eureka/,http://eadmin:eadmin123@eurekaService2:9512/eureka/,http://eadmin:eadmin123@eurekaService3:9513/eureka/
-       defaultZone: http://eadmin:eadmin123@eurekaService:9511/eureka/
+      defaultZone: http://eadmin:eadmin123@eurekaService1:9511/eureka/,http://eadmin:eadmin123@eurekaService2:9512/eureka/,http://eadmin:eadmin123@eurekaService3:9513/eureka/
+#       defaultZone: http://eadmin:eadmin123@eurekaService:9511/eureka/
 management:
   security:
     enabled: false

@@ -11,12 +11,12 @@
 
     <groupId>com.troylc.cloud</groupId>
     <artifactId>microservice-eureka-service</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
-    <name>microservice-eureka-service</name>
     <description>project for Spring cloud</description>
 
+    <name>microservice-eureka-service</name>
     <properties>
         <!--程序入口-->
         <start-class>com.troylc.cloud.EurekaServiceApplication</start-class>

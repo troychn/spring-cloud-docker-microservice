@@ -9,8 +9,8 @@ eureka:
     instance-id: ${eureka.instance.hostname}:${server.port}  # 将Instance ID设置成IP:端口的形式
   client:
     serviceUrl:
-#     defaultZone: http://eadmin:eadmin123@eurekaService1:9511/eureka/,http://eadmin:eadmin123@eurekaService2:9512/eureka/,http://eadmin:eadmin123@eurekaService3:9513/eureka/
-      defaultZone: http://eadmin:eadmin123@eurekaService:9511/eureka/
+     defaultZone: http://eadmin:eadmin123@eurekaService1:9511/eureka/,http://eadmin:eadmin123@eurekaService2:9512/eureka/,http://eadmin:eadmin123@eurekaService3:9513/eureka/    #把configservice注册到eureka上，以便于客户端通过eureka上注册的信息找到configservice
+#      defaultZone: http://eadmin:eadmin123@eurekaService:9511/eureka/
 #实现的基本的 HttpBasic 的认证
 security:
   basic:
@@ -35,7 +35,7 @@ spring:
           username: username   #填写git仓库的用户名
           password: password   #填写git仓库的密码
 #      discovery:
-#        enabled: true
+#        enabled: true   #高可用时，可以开启客户端注册
 #      fail-fast: true
     stream:   #配置通过spring cloud bus利用kafka消息机制实现自动刷新配置文件
       kafka:
