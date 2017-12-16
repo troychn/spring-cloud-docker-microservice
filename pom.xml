@@ -37,7 +37,7 @@
        <!-- <docker.image.prefix>troylc/hub</docker.image.prefix>
         <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>-->
         <!--配置镜像仓库的对应的地址与端口-->
-        <spring-boot-admin.version>1.5.0</spring-boot-admin.version>
+        <spring-boot-admin.version>1.5.5</spring-boot-admin.version>
         <docker.image.prefix>myhub</docker.image.prefix>
         <docker.repostory>tcr:5000</docker.repostory>
         <swagger.version>2.5.0</swagger.version>
@@ -67,6 +67,11 @@
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-server</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
                 <version>${spring-boot-admin.version}</version>
             </dependency>
             <dependency>
