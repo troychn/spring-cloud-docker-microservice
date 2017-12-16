@@ -22,6 +22,15 @@ spring:
       trace:
         enabled: true   #Spring Cloud Bus事件传播的细节
 eureka:
+  instance:
+    hostname: userservice
+    prefer-ip-address: true
+    ip-address: ${eureka.instance.hostname} #只有当prefer-ip-address: true 时才生效
+    instance-id: ${eureka.instance.hostname}:${server.port}  # 将Instance ID设置成IP:端口的形式
+#    status-page-url-path: /productApi      #修改info的地址为API接口页面
+    status-page-url-path: http://${spring.cloud.client.ipAddress}:${server.port}/swagger-ui.html
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
   client:
     serviceUrl:
       defaultZone: http://eadmin:eadmin123@eurekaService1:9511/eureka/,http://eadmin:eadmin123@eurekaService2:9512/eureka/,http://eadmin:eadmin123@eurekaService3:9513/eureka/

@@ -15,7 +15,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.5.RELEASE</version>
+		<version>1.5.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -26,6 +26,7 @@
         <module>microservice-api-gateway</module>
         <module>microservice-sidecar-comment</module>
         <module>microservice-config-service</module>
+        <module>microservice-admin-monitoring</module>
     </modules>
 
 	<properties>
@@ -35,6 +36,7 @@
        <!-- <docker.image.prefix>troylc/hub</docker.image.prefix>
         <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>-->
         <!--配置镜像仓库的对应的地址与端口-->
+        <spring-boot-admin.version>1.5.0</spring-boot-admin.version>
         <docker.image.prefix>myhub</docker.image.prefix>
         <docker.repostory>tcr:5000</docker.repostory>
         <swagger.version>2.5.0</swagger.version>
@@ -46,7 +48,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Camden.SR6</version>
+                <version>Dalston.SR2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -59,6 +61,26 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui-hystrix</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui-turbine</artifactId>
+                <version>${spring-boot-admin.version}</version>
             </dependency>
         </dependencies>
 

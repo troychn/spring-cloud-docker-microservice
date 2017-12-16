@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: microservice-consumer-productservice
+  cloud:
+    inetutils:
+      preferred-networks:  #配置服务的网络名，以确保admin中所有的服务处于同一个网络中，
 
 
 logging:
@@ -20,7 +23,8 @@ eureka:
     prefer-ip-address: true
     ip-address: ${eureka.instance.hostname} #只有当prefer-ip-address: true 时才生效
     instance-id: ${eureka.instance.hostname}:${server.port}  # 将Instance ID设置成IP:端口的形式
-    status-page-url-path: /productApi      #修改info的地址为API接口页面
+#    status-page-url-path: /productApi      #修改info的地址为API接口页面
+    status-page-url-path: http://${spring.cloud.client.ipAddress}:${server.port}/swagger-ui.html
     leaseRenewalIntervalInSeconds: 10
     leaseExpirationDurationInSeconds: 30
 #    home-page-url-path: /instance-info
@@ -29,4 +33,5 @@ eureka:
       defaultZone: http://eadmin:eadmin123@eurekaService1:9511/eureka/,http://eadmin:eadmin123@eurekaService2:9512/eureka/,http://eadmin:eadmin123@eurekaService3:9513/eureka/
     healthcheck:
       enabled: true
+
 

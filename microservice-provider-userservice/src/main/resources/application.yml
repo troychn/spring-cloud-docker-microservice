@@ -1,8 +1,41 @@
 server:
   port: 9514
+spring:
+  application:
+    name: microservice-provider-userservice
+  cloud:
+    inetutils:
+      preferred-networks:  #配置服务的网络名，以确保admin中所有的服务处于同一个网络中，
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:                           # 指定数据源
+    platform: h2                        # 指定数据源类型
+    schema: classpath:schema.sql        # 指定h2数据库的建表脚本
+    data: classpath:data.sql            # 指定h2数据库的insert脚本
 
-      
+logging:
+  level:
+    root: INFO
+    org.hibernate: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
+    com.troylc.cloud: debug
 
 
-
+eureka:
+  instance:
+    hostname: userService
+    prefer-ip-address: true
+    ip-address: ${eureka.instance.hostname} #只有当prefer-ip-address: true 时才生效
+    instance-id: ${eureka.instance.hostname}:${server.port}  # 将Instance ID设置成IP:端口的形式
+    status-page-url-path: /usersApi       #修改info的地址为API接口页面
+#    home-page-url-path: /instance-info
+  client:
+    serviceUrl:
+      defaultZone: http://eadmin:eadmin123@eurekaService1:9511/eureka/,http://eadmin:eadmin123@eurekaService2:9512/eureka/,http://eadmin:eadmin123@eurekaService3:9513/eureka/
+    healthcheck:
+      enabled: true
 

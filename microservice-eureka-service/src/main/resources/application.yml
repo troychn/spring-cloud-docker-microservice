@@ -1,6 +1,9 @@
 spring:
   application:
     name: microservice-eureka-services
+  cloud:
+    inetutils:
+      preferred-networks:  #配置服务的网络名，以确保admin中所有的服务处于同一个网络中，
 #  profiles:
 #    active: eurekaService1
 security:

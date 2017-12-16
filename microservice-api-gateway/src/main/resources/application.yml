@@ -1,8 +1,12 @@
 spring:
   application:
     name: microservice-api-gateway
+  cloud:
+    inetutils:
+      preferred-networks:  #配置服务的网络名，以确保admin中所有的服务处于同一个网络中，
 server:
   port: 9516
+  
 
 eureka:
   instance:
@@ -17,7 +21,6 @@ eureka:
         enabled: true
 
 
-
 # 设置默认超时时间60s（default为全局；若想设置某项服务的超时时间，只需要将default替换为对应的服务名）
 hystrix:
   command:
@@ -26,16 +29,18 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 60000
-
+                                                
 zuul:
-   routes:
-     api-productservice:
-       path: /api/product/**
-       serviceId: microservice-consumer-productservice
-       stripPrefix: true
+  routes:
+    api-productservice:
+      path: /api/product/**
+      serviceId: microservice-consumer-productservice
+      stripPrefix: true
 # stripPrefix：是否去除前缀，默认为true
 # stripPrefix=true, http://localhost:8080/api/swagger/api/hello ==> http://localhost:8081/api/hello
 # stripPrefix=false, http://localhost:8080/api/swagger/api/hello ==> http://localhost:8081/api/swagger/api/hello
      api-usertservice:
        path: /api/users/**
        serviceId: microservice-provider-userservice
+
+h
