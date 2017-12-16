@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: adminserver
+  cloud:
+    inetutils:
+      preferred-networks:  #配置服务的网络名，以确保admin中所有的服务处于同一个网络中，
+        - eureka-net
+  mail:
+    host: mail.163.com   #邮箱发送服务器
+    username: troylc@163.com   #发送者地址
+    password: xxxxxxxx    #邮箱密码
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+            required: false
+  boot:
+    admin:
+      notify:
+        mail:
+          enabled: true
+          ignore-changes: "UNKNOWN:UP"  #忽略从unknown状态到up启动状态
+          to: "xxxxxxx@163.com"   #发送邮箱地址
+          cc:                     #抄送
+          subject: "#{application.name} (#{application.id}) is #{to.status}"   #发送标题
+          text: "#{application.name} (#{application.id})\nstatus changed from #{from.status} to #{to.status}\n\n#{application.healthUrl}"  #内容模板
+          from: "troylc@163.com"    #发送者需要和上面的发送者地址保持一致
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eadmin:eadmin123@eurekaService1:9511/eureka/,http://eadmin:eadmin123@eurekaService2:9512/eureka/,http://eadmin:eadmin123@eurekaService3:9513/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: ${spring.application.name}         # 指定该Eureka实例的主机名
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+
