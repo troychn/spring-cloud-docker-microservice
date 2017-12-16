@@ -27,6 +27,7 @@
         <module>microservice-sidecar-comment</module>
         <module>microservice-config-service</module>
         <module>microservice-admin-monitoring</module>
+        <module>microservice-sleuth-zipkin</module>
     </modules>
 
 	<properties>
@@ -40,7 +41,8 @@
         <docker.image.prefix>myhub</docker.image.prefix>
         <docker.repostory>tcr:5000</docker.repostory>
         <swagger.version>2.5.0</swagger.version>
-
+        <mybatis.version>3.3.1</mybatis.version>
+        <mybatis.spring.version>1.2.4</mybatis.spring.version>
     </properties>
 
     <dependencyManagement>
@@ -48,7 +50,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Dalston.SR2</version>
+                <version>Dalston.SR4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

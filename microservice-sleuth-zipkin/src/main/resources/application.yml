@@ -1,0 +1,16 @@
+server:
+  port: 9411
+spring:
+  application:
+    name: zipkinserver
+  cloud:
+    inetutils:
+      preferred-networks:  #配置服务的网络名，以确保admin中所有的服务处于同一个网络中，
+        - eureka-net
+  sleuth:
+    enabled: false
+    sampler:
+      percentage: 1 #应该抽样的请求的百分比。 例如。 1.0 - 100％的要求应该是
+zipkin:
+  storage:
+    type: mysql
